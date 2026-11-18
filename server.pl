@@ -1,6 +1,5 @@
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
-:- use_module(library(http/http_error)).
 
 % Route
 :- http_handler(root(.), home, []).
@@ -22,4 +21,9 @@ start :-
     http_server(http_dispatch, [port(8000)]),
     format('Prolog server running on port 8000~n').
 
-:- initialization(start, main).
+% Application entry point
+main :-
+    start,
+    thread_get_message(_).
+
+:- initialization(main, main).
